@@ -1,0 +1,79 @@
+{% extends "AdminLayout.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+  {% block head %}
+  {{ super() }}
+  {% endblock %}
+</head>
+<body>
+  {% block navbar %}
+  {{ super() }}
+
+ 
+
+<br>
+<br>
+<div align="center">
+  <h1>Kapci Ticketing System Vlan Data</h1>
+</div>
+<br>
+<br>
+
+</script>
+
+    <br>
+    <form method="POST">
+      <label style="margin-left: 1%;" for="vlans">Vlans : </label>
+      <select name="vlans" id="vlans"  onchange='this.form.submit()'>
+        {% if not vname %}
+        <option value=""selected disabled>Please Select The Vlan</option>
+        {%endif%}
+        {% for item in vl %}
+        <option value="{{ item.id }}"{{item.Vlan}} {% if vname %} {% if vname.Vlan==item.Vlan %} selected {%endif%} {%endif%}>{{item.Vlan}} </option>
+        {% endfor %}
+      </select>
+      <noscript><input type="submit" value="Submit"></noscript>
+      </form>
+      <br>
+      <br>
+      <button style="margin-left: 1%;" id="Register" >Register New User</button>
+      <script type="text/javascript">
+          document.getElementById("Register").onclick = function () {
+              location.href = "{{url_for('AddNewUser')}}";
+          };
+      </script>
+      <br>
+      <br>
+      <button style="margin-left: 1%;" id="AllUsers" >View All Users</button>
+      <script type="text/javascript">
+          document.getElementById("AllUsers").onclick = function () {
+              location.href = "{{url_for('AllUserSearch')}}";
+          };
+      </script>
+      <br>
+      <br>
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+              <!-- Do something with the message -->
+              {{ messages[0] }}
+  
+      {% endif %}
+      {% endwith %}
+      {% if dname %}
+      <table  style="width:30%; margin-left: 1%;">
+        <thead><tr><th> {{dname.Dept_name}} </th><th> IP</th> <th> Device Specs</th></tr></thead>
+        <tbody>
+        {% for row in users %}
+        <tr>
+            <td><a href="{{url_for('EditUserAdmin', User_ID = row.id) }}" >{{ row.name }}<br></td>        
+        <td>{{row.ip}}</td>
+        <td>{{row.Device_Specs}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+        {%endif%}
+        {% endblock %}
+      </body>
+      </html>

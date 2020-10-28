@@ -1,0 +1,51 @@
+{% extends "AdminLayout.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+  {% block head %}
+  {{ super() }}
+  {% endblock %}
+</head>
+<body>
+  {% block navbar %}
+  {{ super() }}
+<br>
+<br>
+<div align="center">
+  <h1>Kapci Ticketing System</h1>
+</div>
+<br>
+<br>
+
+
+        </div>
+        <div style="margin-left: 20px;">
+          <h1  style="margin-left: 1%;"class="page-header">New Request : </h1>
+          <form  style="margin-left: 2%;" method="POST">
+            <label for="Name">Name : </label>
+            <input style="margin-bottom: 1%; margin-left: 110px" name="Name" value= "{{name}}" readonly>
+            <br>
+            <label for="Description">Problem Description : </label>
+            <input style="margin-bottom: 1%; padding: 1%; margin-left:7px;" name="Description">
+            <br>
+            <label for="Request_Type">Request Type : </label>
+            <select style="margin-bottom: 1%; margin-left: 53px;" name="Type" id="Type" >
+                {% for item in items %}
+                <option value="{{ item.Type_name }}">{{item.Type_name}}</option>
+                {% endfor %}
+                </select>
+            <br>
+            <label for="Request_Priority" >Request Priority : </label>
+            <select style="margin-bottom: 1%;margin-left: 38px; " name="Priority" id="Priority" >
+              {% for priority in priorities %}
+              <option value="{{ priority.Priority_name }}">{{priority.Priority_name}}</option>
+              {% endfor %}
+            </select>
+            <br>
+            <br>
+            <input type="submit">
+        </form>
+        </div>
+        {% endblock %}
+      </body>
+      </html>

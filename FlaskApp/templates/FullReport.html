@@ -1,0 +1,215 @@
+{% extends "AdminLayout.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+  {% block head %}
+  {{ super() }}
+  <script>
+  function fnExcelReportFull()
+{
+    var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+    var textRange; var j=0;
+    tab = document.getElementById('full'); // id of table
+
+    for(j = 0 ; j < tab.rows.length ; j++) 
+    {     
+        tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+        //tab_text=tab_text+"</tr>";
+    }
+
+    tab_text=tab_text+"</table>";
+    tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+    tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE "); 
+
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+    {
+        txtArea1.document.open("txt/html","replace");
+        txtArea1.document.write(tab_text);
+        txtArea1.document.close();
+        txtArea1.focus(); 
+        sa=txtArea1.document.execCommand("SaveAs",true,"Full_Report.xls");
+    }  
+    else                 //other browser not tested on IE 11
+        sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));  
+
+    return (sa);
+}
+function fnExcelReportpart()
+{
+    var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+    var textRange; var j=0;
+    tab = document.getElementById('part'); // id of table
+
+    for(j = 0 ; j < tab.rows.length ; j++) 
+    {     
+        tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+        //tab_text=tab_text+"</tr>";
+    }
+
+    tab_text=tab_text+"</table>";
+    tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+    tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE "); 
+
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+    {
+        txtArea1.document.open("txt/html","replace");
+        txtArea1.document.write(tab_text);
+        txtArea1.document.close();
+        txtArea1.focus(); 
+        sa=txtArea1.document.execCommand("SaveAs",true,"Partial_Report.xls");
+    }  
+    else                 //other browser not tested on IE 11
+        sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));  
+
+    return (sa);
+}
+</script>
+{% endblock %}
+</head>
+<body>
+  {% block navbar %}
+  {{ super() }}
+  
+<div align="center">
+  <h1>Kapci Ticketing System</h1>
+</div>
+<br>
+<br>
+<form style="margin-left: 1%;" method="post">
+  Date Of The Requests :
+  <br>
+  <br>
+  <iframe id="txtArea1" style="display:none"></iframe>
+
+  <label for="From">From : </label>
+  <input type="date" name="From" {%if Dfrom %} value="{{Dfrom}}" {%endif%} {%if not Dfrom %} value="{{crdate}}" {%endif%}  >
+  <label for="To">To : </label>
+  <input type="date" name="To" {%if Dto %} value="{{Dto}}" {%endif%} {%if not Dfrom %} value="{{crdate}}" {%endif%}>
+  <input type="submit" value="Send">
+</form>
+        </script>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+          <div class="{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endwith %}
+            <br>
+
+
+            {% if not rows%}
+            {% if defrows%}
+            <table id="full">
+              <thead><tr><th>ID</th><th>Name</th><th>Opened</th><th>Description</th><th>Assigned To</th><th>Status</th><th>Type</th><th>Priority</th><th>1st Resp. At</th><th>Res. At</th><th>Opened From (M)</th><th>Pending From (M)</th></tr></thead>
+              <tbody>
+              {% for row in defrows %}
+              <tr {%if row.Status_Name =="Opened" %} style="color: firebrick;"{%endif%} {%if row.Status_Name =="Pending" %} style="color: rgb(34, 178, 171);"{%endif%}>
+                  <td>ITReq#{{ row.id }}
+                  </td>
+                  <td>{{ row.name }}<br></td>        
+                  <td>{{ row.Record_Created }}</td>
+                  <td class="mul">{{ row.Description }}</td>
+                  <td>{{ row.Assigned_To }}</td>
+                  <td >{{ row.Status_Name }}</td>
+                  <td>{{ row.Type_Name }}</td>
+                  <td>{{ row.Priority_Name }}</td>
+                  <td>{{ row.FirstResponseAt }}</td>
+                  <td>{{ row.ResolvedAt }}</td>
+                  <td>{%if row.Type_Name =="Software"%}
+                    {%if row.OpenedToPending >= swpend %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+                    {%if row.Type_Name =="Hardware"%}
+                    {%if row.OpenedToPending >= hwpend %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+                    {%if row.Type_Name =="Network"%}
+                    {%if row.OpenedToPending >= NetPend %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+                    {%if row.Type_Name =="Online Support"%}
+                    {%if row.OpenedToPending >= onlinepend %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+                    {%if row.Type_Name =="External Customer"%}
+                    {%if row.PendingToSolved >= exPend %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}              
+                    {{ row.OpenedToPending }}  </td>
+              
+                  <td>{%if row.Type_Name =="Software"%}
+                    {%if row.PendingToSolved >= SWThreshHold %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+                    {%if row.Type_Name =="Hardware"%}
+                    {%if row.PendingToSolved >= HWThreshHold %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+                    {%if row.Type_Name =="Network"%}
+                    {%if row.PendingToSolved >= NThreshHold %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+                    {%if row.Type_Name =="Online Support"%}
+                    {%if row.PendingToSolved >= OThreshHold %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+                    {%if row.Type_Name =="External Customer"%}
+                    {%if row.PendingToSolved >= exTh %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+              
+                    {{ row.PendingToSolved }}</td>
+              
+              </tr>
+              {% endfor %}
+              </tbody>
+              </table>
+              <br>
+              <br>
+              <button style="margin:0 auto; display:block;" id="btnExport" onclick="fnExcelReportFull();"> EXPORT Full</button>
+    {%endif%}
+    {%endif%}
+
+            {% if rows %}
+            <table id="part">
+              <thead><tr><th>ID</th><th>Name</th><th>Opened</th><th>Description</th><th>Assigned To</th><th>Status</th><th>Type</th><th>Priority</th><th>1st Resp. At</th><th>Res. At</th><th>Opened From (M)</th><th>Pending From (M)</th></tr></thead>
+              <tbody>
+              {% for row in rows %}
+              <tr {%if row.Status_Name =="Opened" %} style="color: firebrick;"{%endif%} {%if row.Status_Name =="Pending" %} style="color: rgb(34, 178, 171);"{%endif%}>
+                  <td>ITReq#{{ row.id }}
+                  </td>
+                  <td>{{ row.name }}<br></td>        
+                  <td>{{ row.Record_Created }}</td>
+                  <td class="mul">{{ row.Description }}</td>
+                  <td>{{ row.Assigned_To }}</td>
+                  <td>{{ row.Status_Name }}</td>
+                  <td>{{ row.Type_Name }}</td>
+                  <td>{{ row.Priority_Name }}</td>
+                  <td>{{ row.FirstResponseAt }}</td>
+                  <td>{{ row.ResolvedAt }}</td>
+                  <td>{%if row.Type_Name =="Software"%}
+                    {%if row.OpenedToPending >= swpend %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+                    {%if row.Type_Name =="Hardware"%}
+                    {%if row.OpenedToPending >= hwpend %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+                    {%if row.Type_Name =="Network"%}
+                    {%if row.OpenedToPending >= NetPend %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+                    {%if row.Type_Name =="Online Support"%}
+                    {%if row.OpenedToPending >= onlinepend %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+                    {%if row.Type_Name =="External Customer"%}
+                    {%if row.PendingToSolved >= exPend %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}              
+                    {{ row.OpenedToPending }}  </td>
+              
+                  <td>{%if row.Type_Name =="Software"%}
+                    {%if row.PendingToSolved >= SWThreshHold %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+                    {%if row.Type_Name =="Hardware"%}
+                    {%if row.PendingToSolved >= HWThreshHold %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+                    {%if row.Type_Name =="Network"%}
+                    {%if row.PendingToSolved >= NThreshHold %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+                    {%if row.Type_Name =="Online Support"%}
+                    {%if row.PendingToSolved >= OThreshHold %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+                    {%if row.Type_Name =="External Customer"%}
+                    {%if row.PendingToSolved >= exTh %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+              
+                    {{ row.PendingToSolved }}</td>
+              </tr>
+              {% endfor %}
+              </tbody>
+              </table>
+              <br>
+              <br>
+              <button style="margin:0 auto; display:block;" id="btnExport" onclick="fnExcelReportpart();"> EXPORT </button>
+    {%endif%}
+<br>
+<br>
+    {%if not rows and not defrows%}
+    <h1 align="center" style="color: red;"> The Selected Period Doesn't Have Any Records</h1>
+{%endif%}
+
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,84 @@
+<head>
+  <img src="/static/it11.jpg" width="100%" >
+<style>
+  * {
+  font-family: sans-serif;
+  background-color: #EEEEEE;
+
+}
+.form-container {
+  display: flex;
+  justify-content: center;
+ 
+  background-size: cover;
+  position: relative;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #ffffff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+}
+.form-text {
+  color: #f1f1f1;
+  display: block;
+  font-size: 80%;
+  font-weight: 400;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  font-weight: 400;
+  color: #ffffff;
+  cursor: pointer;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  border: 3px solid transparent;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  background-color: #007bff;
+  margin-top: 5px;
+}
+  </style>
+</head>
+<body>
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block content %}
+    <div class="form-container">
+
+      <form class="form-signin" method="POST" action="/login">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        {{ form.hidden_tag() }}
+        {{ wtf.form_field(form.username) }}
+        {{ wtf.form_field(form.password) }}
+        {{ wtf.form_field(form.remember) }}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+                <!-- Do something with the message -->
+                {{ messages[0] }}
+    
+        {% endif %}
+    {% endwith %}
+      </form>
+
+    </div> <!-- /container -->
+{% endblock %}

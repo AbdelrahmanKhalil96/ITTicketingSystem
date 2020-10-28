@@ -1,0 +1,177 @@
+{% extends "AdminLayout.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+  {% block head %}
+  {{ super() }}
+
+  <script>
+    $(document).ready(function(){
+    $("#PrinterType").keyup(function() {
+      console.log("test")
+      /* stop form from submitting normally */
+      //event.preventDefault();
+      var NameData= $(PrinterType).val()
+      console.log(NameData)
+      req = $.ajax({
+                  type: "POST",
+                  url:'/ITMODE/Users/AllPrinterSearchType/',
+                  data: JSON.stringify(NameData),
+                  dataType: 'json'
+              }).done(function(data) {
+                console.log(data);
+      /* get the action attribute from the <form action=""> element */
+     if(data[0] && !data[0]['Error']){
+      $('#table1').find('thead').empty();
+        $('#table1').find('tbody').empty();
+        var $table = $('<table/>');
+        var $thead = $('<thead>').append($('<tr>').append(
+        $('<th>').text('Type'),
+        $('<th>').text('IP'),
+        $('<th>').text('Department'),
+        $('<th>').text('Description')
+                    )).appendTo($table);
+        for (var key in data){
+    //key will be -> 'id'
+    var $tbody = $('<tbody>').append($('<tr>').append(
+      $('<td>').append($('<a>').text(data[key]['type']).attr('href',"{{url_for('EditPrinterAdmin', Printer_ID =1) }}".replace("1", data[key]['id']))),                $('<td>').text(data[key]['ip']),
+                  $('<td>').text(data[key]['Dept_name']),
+                    $('<td>').text(data[key]['Description'])
+   )).appendTo($table);
+        ($table).appendTo('#table1');
+     }
+     }
+     else if (typeof data !== 'undefined' && data["Error"]){
+      $('#table1').find('thead').empty();
+        $('#table1').find('tbody').empty();
+      $("#redtxt").text("Please Use Only English Letters")
+     }
+     else if(typeof data === 'undefined' || !data[0]){
+      $('#table1').find('thead').empty();
+        $('#table1').find('tbody').empty();
+        $("#redtxt").text(" Sorry, There Are Currently No Users Matching Your Search Criteria")
+
+     }
+     
+    });
+    });
+
+
+    $("#PrinterIP").keyup(function() {
+      console.log("test")
+      /* stop form from submitting normally */
+      //event.preventDefault();
+      var IPData= $(PrinterIP).val()
+      console.log(IPData)
+      req = $.ajax({
+                  type: "POST",
+                  url:'/ITMODE/Users/AllPrinterSearchIP/',
+                  data: JSON.stringify(IPData),
+                  dataType: 'json'
+              }).done(function(data) {
+                console.log(data);
+      /* get the action attribute from the <form action=""> element */
+        if(data[0] && !data[0]['Error']){
+      $('#table1').find('thead').empty();
+        $('#table1').find('tbody').empty();
+        var $table = $('<table/>');
+        var $thead = $('<thead>').append($('<tr>').append(
+        $('<th>').text('Type'),
+        $('<th>').text('IP'),
+        $('<th>').text('Department'),
+        $('<th>').text('Description')
+                    )).appendTo($table);
+        for (var key in data){
+    //key will be -> 'id'
+    var $tbody = $('<tbody>').append($('<tr>').append(
+      $('<td>').append($('<a>').text(data[key]['type']).attr('href',"{{url_for('EditPrinterAdmin', Printer_ID =1) }}".replace("1", data[key]['id']))),
+                $('<td>').text(data[key]['ip']),
+                  $('<td>').text(data[key]['Dept_name']),
+                    $('<td>').text(data[key]['Description'])
+   )).appendTo($table);
+        ($table).appendTo('#table1');
+     }
+     }
+     else if (typeof data !== 'undefined' && data["Error"]){
+      $('#table1').find('thead').empty();
+        $('#table1').find('tbody').empty();
+      $("#redtxt").text("Please Use Only English Letters")
+     }
+     else if(typeof data === 'undefined' || !data[0]){
+      $('#table1').find('thead').empty();
+        $('#table1').find('tbody').empty();
+        $("#redtxt").text(" Sorry, There Are Currently No Users Matching Your Search Criteria")
+
+     }
+     
+    });
+    });
+
+
+  });
+    </script>
+
+  {% endblock %}
+</head>
+<body>
+  {% block navbar %}
+  {{ super() }}
+
+ 
+
+<br>
+<br>
+<div align="center">
+  <h1>Kapci Ticketing System</h1>
+</div>
+<br>
+<br>
+
+</script>
+
+    <br>
+    <form>
+      <label style="margin-left: 1%;" for="PrinterType">Printer Type : </label>
+      
+      <input type="text" name="PrinterType" id="PrinterType" placeholder="Please Enter Printer Type">
+     
+    </form>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+      <div style="margin-left: 10px;" class="{{ category }}">{{ message }}</div>
+    {% endfor %}
+    {% endwith %}
+<br>
+      <br>
+     
+
+    <form>
+      <label style="margin-left: 1%;" for="PrinterIP">Printer IP : </label>
+      
+      <input style="margin-left: 25px;" type="text" name="PrinterIP" id="PrinterIP" placeholder="Please Enter The Printer IP">
+      </form>
+      <br>
+      <br>
+      <button style="margin-left: 1%;" id="Register" >Register New Printer</button>
+      <script type="text/javascript">
+          document.getElementById("Register").onclick = function () {
+              location.href = "{{url_for('AddNewPrinter')}}";
+          };
+      </script>
+      <br>
+      <br>
+      
+      <table id="table1" style="width:80%; margin-left: 1%;">
+        <thead id="head">
+        </thead>
+        <tbody id="body">
+      
+      </tbody>
+      </table>
+      
+
+        <h1 id="redtxt" style="color: red;"></h1>
+  {% endblock %}
+</body>
+</html>
+      

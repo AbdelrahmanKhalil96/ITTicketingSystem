@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+table {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+ td, th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+.mul{
+  word-wrap:break-word;
+  word-break: break-all;
+ max-width: 10%;
+line-height: 170%;
+}
+tr:nth-child(even){background-color: #f2f2f2;}
+
+ tr:hover {background-color: #ddd;}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a, .TOP {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <a href="/ITMODE/Cases/">Cases</a>
+  <a href="/ITMODE/Users/">Manage Users</a>
+  <a href="/ITMODE/Printers/">Manage Printers</a>
+  <a class="active" href="/ITMODE/Report/">Reports</a>
+  <a style="float:right"  href="{{url_for('logout')}}">Logout</a>
+  <label class="TOP" style="float:right;"> Connected User : {{conn.name}}</label>
+  <a style="float:right"  href="{{url_for('NewAdminRequest')}}">Submit New Request</a>
+</div>
+
+
+<img style="float: right;" src="/static/kapci.png"  height=15% width=15%></img>
+
+<br>
+<br>
+<div align="center">
+  <h1>Kapci Ticketing System</h1>
+</div>
+<br>
+<br>
+        </script>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {%if messages[0] !="Please log in to access this page."%}
+                <!-- Do something with the message -->
+                {{ messages[0] }}
+    
+        {% endif %}    {% endif %}
+        {% endwith %}
+            <br>
+<table  id = "Requests" style="width:95%">
+    <thead><tr><th>ID</th><th>Customer Name</th><th>Opened Date</th><th>Problem Description</th><th>Assigned_To</th><th>Status</th><th>Type</th><th>Priority</th><th>Time_To_Solve</th><th>UNIT</th></tr></thead>
+    <tbody>
+        {% for row in rows %}
+        <tr>
+            <td>ITReq#{{ row.id }}</td>
+            <td>{{ row.name }}<br></td>        
+            <td>{{ row.Record_Created }}</td>
+            <td class="mul">{{ row.Description }}</td>
+            <td>{{ row.Assigned_To }}</td>
+            <td>{{ row.Status_Name }}</td>
+            <td>{{ row.Type_Name }}</td>
+            <td>{{ row.Priority_Name }}</td>
+            <td>{{ row.Time_To_Solve }}</td>
+            <td>{{ row.UNIT_Name }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+
+    
+
+</body>
+</html>

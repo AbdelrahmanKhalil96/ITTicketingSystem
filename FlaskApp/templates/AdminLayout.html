@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% block head %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="/static/bootstrap.min.css">
+  <script src="/static/jquery.min.js"></script>
+  <script src="/static/bootstrap.min.js"></script>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.fnt{
+  font-size: 18px;
+}
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+ .TOP {
+  color: #f2f2f2;
+  font-size: 17px;
+  padding-top: 12px;
+}
+
+.topnav a:hover{
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+table {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.nm{
+  min-width: 70px;
+
+}
+ td, th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+.mul{
+  word-wrap:break-word;
+  word-break: break-all;
+ max-width: 10%;
+line-height: 110%;
+}
+tr:nth-child(even){background-color: #f2f2f2;}
+
+ tr:hover {background-color: #ddd;}
+
+ th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #0c1669;
+  color: white;
+}
+</style>
+{% endblock %}
+</head>
+<body>
+  {% block navbar %}
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>       
+
+        </button>
+        <!--<a class="navbar-brand" href="#">WebSiteName</a> -->
+        <label class="navbar-brand" style="color: #ddd;" > {{conn.name}}</label>
+      </div>
+      <div class="collapse navbar-collapse  fnt" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li {%if page == 'Cases' %} class="active" {%endif%}> <a  href="/ITMODE/Cases/">Cases</a></li>
+          <li {%if page == 'User' %} class="active" {%endif%}><a href="/ITMODE/Users/">Manage Users</a></li>
+          <li {%if page == 'Printer' %} class="active" {%endif%}><a href="/ITMODE/Printers/">Manage Printers</a></li>
+          <li {%if page == 'Vlans' %} class="active" {%endif%}><a href="/ITMODE/Vlans/">Vlans</a></li>
+          <li {%if page == 'Report' %} class="active" {%endif%}><a href="/ITMODE/Report/">Reports</a></li>        
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right  fnt">
+          <li>  <a href="{{url_for('NewAdminRequest')}}">Submit New Request</a>          </li>
+            <!-- <li>  <label class="TOP" > Connected User : {{conn.name}}</label></li> -->
+            <li>  <a  href="{{url_for('logout')}}">Logout</a></li>        </ul>
+      </div>
+    </div>
+  </nav>
+
+<img style="float: right;" src="/static/kapci.png"  height=15% width=15%></img>
+{% endblock %}
+</body>
+</html>

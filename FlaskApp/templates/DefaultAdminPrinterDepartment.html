@@ -1,0 +1,79 @@
+{% extends "AdminLayout.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+  {% block head %}
+  {{ super() }}
+  {% endblock %}
+</head>
+<body>
+  {% block navbar %}
+  {{ super() }}
+
+ 
+
+<br>
+<br>
+<div align="center">
+  <h1>Kapci Ticketing System Departments' Printers</h1>
+</div>
+<br>
+<br>
+
+</script>
+
+    <br>
+    <form method="POST">
+      <label style="margin-left: 1%;" for="departments">Departments : </label>
+      <select name="departments" id="departments"  onchange='this.form.submit()'>
+        {% if not dname %}
+        <option value=""selected disabled>Please Select The Department</option>
+        {%endif%}
+        {% for item in dept %}
+        <option value="{{ item.id }}"{{item.Dept_name}} {% if dname %} {% if dname.Dept_name==item.Dept_name %} selected {%endif%} {%endif%}>{{item.Dept_name}} </option>
+        {% endfor %}
+      </select>
+      <noscript><input type="submit" value="Submit"></noscript>
+      </form>
+      <br>
+      <br>
+      <button style="margin-left: 1%;" id="Register" >Register New Printer</button>
+      <script type="text/javascript">
+          document.getElementById("Register").onclick = function () {
+              location.href = "{{url_for('AddNewPrinter')}}";
+          };
+      </script>
+      <br>
+      <br>
+      <button style="margin-left: 1%;" id="AllPrinters" >View All Printers</button>
+      <script type="text/javascript">
+          document.getElementById("AllPrinters").onclick = function () {
+              location.href = "{{url_for('AllPrinterSearch')}}";
+          };
+      </script>
+      <br>
+      <br>
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+              <!-- Do something with the message -->
+              {{ messages[0] }}
+  
+      {% endif %}
+      {% endwith %}
+      {% if dname %}
+      <table  style="width:30%; margin-left: 1%;">
+        <thead><tr><th> {{dname.Dept_name}} </th><th> IP</th> <th> Description</th></tr></thead>
+        <tbody>
+        {% for row in pr %}
+        <tr>
+            <td><a href="{{url_for('EditPrinterAdmin', Printer_ID = row.ID) }}" >{{ row.Type }}<br></td>        
+        <td>{{row.IP}}</td>
+        <td>{{row.Description}}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+        {%endif%}
+{% endblock %}
+</body>
+</html>

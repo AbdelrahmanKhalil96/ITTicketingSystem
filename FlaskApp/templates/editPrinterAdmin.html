@@ -1,0 +1,81 @@
+{% extends "AdminLayout.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+  {% block head %}
+  {{ super() }}
+  {% endblock %}
+</head>
+<body>
+  {% block navbar %}
+  {{ super() }}
+<br>
+<br>
+<div align="center">
+  <h1>Kapci Ticketing System</h1>
+</div>
+<br>
+<br>
+
+
+</script>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+            <!-- Do something with the message -->
+            {{ messages[0] }}
+
+    {% endif %}
+    {% endwith %}
+    <br>
+        </div>
+        <div style="margin-left: 20px;">
+          <h1 class="page-header">Edit Printer- Admin Mode</h1>
+          <form class="form-inline" method="POST">
+            <div class="form-group">
+
+            <label for="Type">Printer Type : </label>
+            <input name="Type" value= "{{ printerData.Type }}" >
+            </div>
+            <div class="form-group">
+
+            <label for="IP">Printer IP : </label>
+            <input name="IP" value= "{{ printerData.IP }}" >
+         </div>
+         <div class="form-group">
+
+            <label for="Dept_ID">Printer Department : </label>
+            <select name="Dept_ID" id="Dept_ID" >
+              {% for item in Dept %}
+              <option value="{{ item.id }}" {%if item.id==printerData.Dept_ID%} selected {% endif%}>{{item.Dept_name}}</option>
+              {% endfor %}
+              </select>
+          </div>
+          <div class="form-group">
+
+            <label for="Description">Printer Description : </label>
+            <input name="Description" value= "{{ printerData.Description }}" >
+            </div>
+            <br>
+            <br>
+            <br>
+            <input type="submit">
+        </form>
+        <br>
+        <button id="Delete" >Delete</button>
+        <script type="text/javascript">
+            document.getElementById("Delete").onclick = function () {
+                location.href = "{{url_for('DeletePrinterAdmin', Printer_ID = printerData.ID)}}";
+            };
+        </script>
+        <br>
+        <br>
+        <button id="Cancel" >Cancel</button>
+        <script type="text/javascript">
+            document.getElementById("Cancel").onclick = function () {
+                location.href = "{{url_for('PrinterModifier')}}";
+            };
+        </script>
+        </div>
+        {% endblock %}
+      </body>
+      </html>

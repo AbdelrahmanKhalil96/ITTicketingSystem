@@ -1,0 +1,45 @@
+{% extends "AdminLayout.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+  {% block head %}
+  {{ super() }}
+  {% endblock %}
+</head>
+<body>
+  {% block navbar %}
+  {{ super() }}
+<br>
+<br>
+<div align="center">
+  <h1>Kapci Ticketing System</h1>
+</div>
+<br>
+<br>
+<div style="margin-left: 20px;">
+<h2> Are you sure you want to delete  Request No. : {{req.id}}? </h2>
+
+
+<form action="#" method = 'post'>
+
+	<input type='submit', value = 'Delete'>
+	
+	</form>
+	<br>
+	<button id="Cancel" >Cancel</button>
+        <script type="text/javascript">
+            document.getElementById("Cancel").onclick = function () {
+                location.href = "{{url_for('Cases')}}";
+            };
+        </script>
+        {% with messages = get_flashed_messages() %}
+                {% if messages %}
+            <!-- Do something with the message -->
+        {{ messages[0] }}
+
+    {% endif %}
+    {% endwith %}
+</div>
+{% endblock %}
+</body>
+</html>

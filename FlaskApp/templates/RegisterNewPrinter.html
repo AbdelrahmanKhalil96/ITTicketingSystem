@@ -1,0 +1,53 @@
+{% extends "AdminLayout.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+  {% block head %}
+  {{ super() }}
+  {% endblock %}
+</head>
+<body>
+  {% block navbar %}
+  {{ super() }}
+<br>
+<br>
+<div align="center">
+  <h1>Kapci Ticketing System</h1>
+</div>
+<br>
+<br>
+</div>
+<div style="margin-left: 20px;">
+  <h1 class="page-header">Register New Printer- Admin Mode</h1>
+  <form class="form-inline" method="POST">
+    <div class="form-group">
+    <label for="Type" style="margin-right: 35px;"> Printer Type: </label>
+    <input name="Type" >
+  </div>
+  <div class="form-group">
+    <label for="Description" style="margin-right: 9px;">Printer Description : </label>
+    <input name="Description" type="Description" >
+  </div>
+  <div class="form-group">
+    <label for="Department">Printer Department : </label>
+    <select name="Department" id="Department" >
+      {% for item in Dept %}
+      <option value="{{ item.id }}">{{item.Dept_name}}</option>
+      {% endfor %}
+      </select>
+  </div>
+  <div class="form-group">
+    <label for="ip" style="margin-right: 35px;"> Printer IP : </label>
+    <input name="ip" >
+  </div>
+    <br>
+    <br>
+
+    <input type="submit" class=" form-group btn btn-default">
+</div>
+
+</form>
+<br>
+{% endblock %}
+</body>
+</html>

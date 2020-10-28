@@ -1,0 +1,101 @@
+{% extends "AdminLayout.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+  {% block head %}
+  {{ super() }}
+  {% endblock %}
+</head>
+<body>
+  {% block navbar %}
+  {{ super() }}
+<br>
+<br>
+<div align="center">
+  <h1>Kapci Ticketing System</h1>
+</div>
+
+
+        </div>
+        <div style="margin-left: 20px;">
+          <h1  style="margin-left: 1%;" class="page-header">Edit Request- Admin Mode</h1>
+          <form  class="form-horizontal" method="POST">
+            <div class="form-group">
+            <label  class="control-label col-sm-2"  for="Name">Name : </label>
+            <input name="Name" value= "{{ request.name }}" readonly>
+            </div>
+
+            <div class="form-group">
+            <label  class="control-label col-sm-2"  for="Description">Problem Description : </label>
+            <input name="Description" style="padding: 1%;" value= "{{ request.Description }}" >
+            </div>
+
+            <div class="form-group">
+            <label  class="control-label col-sm-2"  for="Request_Type">Request Type : </label>
+            <select name="Type" id="Type" >
+              {% for item in items %}
+              <option value="{{ item.Type_name }}" {%if item.Type_name==request.Type_Name%} selected {% endif%}>{{item.Type_name}}</option>
+              {% endfor %}
+              </select>
+              </div>
+
+              <div class="form-group">
+            <label class="control-label col-sm-2"  for="Request_Priority">Request Priority : </label>
+            <select name="Priority" id="Priority" >
+              {% for priority in priorities %}
+              <option value="{{ priority.Priority_name }}"{%if priority.Priority_name==request.Priority_Name%} selected {% endif%}>{{priority.Priority_name}}</option>
+              {% endfor %}
+            </select>
+            </div>
+
+            <div class="form-group">
+            <label class="control-label col-sm-2"  for="Assigned_To">Assigned To : </label>
+            <select name="Assigned_To" id="Assigned_To">
+              {% for itmem in mem %}
+              <option value="{{ itmem.name }}"{%if itmem.name==request.Assigned_To%} selected {% endif%}>{{itmem.name}}</option>
+              {% endfor %}
+            </select>
+            </div>
+
+            <div class="form-group">
+            <label class="control-label col-sm-2"  for="Status">Status : </label>
+            <select name="Status" id="Status" >
+              {% for status in sts %}
+              <option value="{{ status.Status_name }}"{%if status.Status_name==request.Status_Name%} selected {% endif%}>{{status.Status_name}}</option>
+              {% endfor %}
+            </select>
+            </div>
+
+            <div class="form-group">
+            <label class="control-label col-sm-2"  for="Time">Time : </label>
+            <input name="Time" {%if request.Time_To_Solve!= None %} value ={{request.Time_To_Solve}} {% endif%} >
+            <select name="Unit" id="Unit" >
+              {% for unit in units %}
+              <option value="{{ unit.Unit_name }}"{%if unit.Unit_name==request.UNIT_Name%} selected {% endif%}>{{unit.Unit_name}}</option>
+              {% endfor %}
+            </select>
+            </div>
+
+            <div class="form-group">
+           <input style="margin-left:6%; float: left;" type="submit">
+               </form>
+             </div>
+            <button id="Cancel" style="margin-left: 5%;" >Cancel</button>
+               <script type="text/javascript">
+                   document.getElementById("Cancel").onclick = function () {
+                       location.href = "{{url_for('Cases')}}";
+                   };
+               </script>
+      
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+                <!-- Do something with the message -->
+                {{ messages[0] }}
+    
+        {% endif %}
+    {% endwith %}
+    <br>
+    <br>
+    {% endblock %}
+  </body>
+  </html>

@@ -1,0 +1,214 @@
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+sudo add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/16.04/mssql-server-2019.list)"
+sudo apt-get update
+sudo apt-get install -y mssql-server
+sudo /opt/mssql/bin/mssql-conf setup
+systemctl status mssql-server --no-pager
+curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+sudo apt install curl
+curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list
+sudo apt-get update 
+sudo apt-get install mssql-tools unixodbc-dev
+sudo apt-get install mssql-tools 
+echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
+echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+source ~/.bashrc
+sqlcmd -S localhost -U SA -P 'P@ssw0rd'
+sqlcmd -S localhost -U SA -P 'P@ssw0rd'
+pip install flask_mysqldb
+pip install flask-mysqldb
+sudo apt-get install libmysqlclient-dev
+sudo apt install default-libmysqlclient-dev
+pip install flask-mysqldb
+sudo pip install flask-mysqldb
+sudo apt-get install python-mysqldb
+pip install mysqlclient-1.4.5-cp27m-win_amd64.whl
+sudo apt-get install python-dev default-libmysqlclient-dev libssl-dev
+pip install --reinstall flask-mysqldb
+pip install flask-mysqldb
+sudo -H pip install pyodbc
+pip install pyodbc
+pip install pymysql
+  462  systemctl start mysql.service/ service mysql start
+  463  sudo apt install mysqlserver
+  464  sudo apt install mysqldb
+  465  #services mysql start
+  466  #/usr/sbin/mysqld --defaults-file=/etc/mysql/my.cnf --basedir=/usr --datadir=/var/lib/mysql --pid-file=/var/run/mysqld/mysqld.pid --socket=/var/run/mysqld/mysqld.sock
+  467  /etc/init.d/mysqld restart 
+  468  /etc/init.d/mysqldb restart 
+  469  #/etc/init.d/mysql start
+  470  /etc/init.d/mysql start
+  471  services mysql start
+  472  service mysql start
+  473  sudo apt-get install mysql-server
+  474  service mysql start
+  475  service mysqld start
+  477  mysql -u root
+  478  sudo mysql -u root
+  482  pip install Flask-Migrate
+  489  pip install pyodbc
+  492  odbcinst -j
+  493  sudo ln -s /usr/local/etc/odbcinst.ini /etc/odbcinst.ini
+  503  pip install urllib3
+  508  pip install --force --no-cache-dir --upgrade playlistfromsong
+  509  python apponly.py
+  513  sqlcmd -S localhost -U SA -P 'P@ssw0rd'
+  514  sudo dhmod 777 /home/test/it_DB/IT_DB_log.ldf
+  515  sudo chmod 777 /home/test/it_DB/IT_DB_log.ldf
+  516  sudo chmod 777 /home/test/it_DB/IT_DB.mdf
+  517  python app1.py
+  518  python /home/test/Desktop/finish/app1.py
+  519  python app1.py
+  520  sqlcmd -S localhost -U SA -P 'P@ssw0rd'
+  521  sudo chmod 777 /home/test/it_DBInc/IT_DB_log.ldf
+  522  sudo chmod 777 /home/test/it_DBInc/IT_DB.mdf
+  523  sqlcmd -S localhost -U SA -P 'P@ssw0rd'
+  524  python app1.py
+  525  python app1py
+  526  python app1.py
+  527  history
+""
+
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install python python-pip
+sudo apt-get install make zip unzip postgresql
+pip install flask packaging oauth2client redis passlib flask-httpauth
+pip install sqlalchemy flask-sqlalchemy psycopg2-binary bleach requests
+pip install flask-wtf
+pip install flask-bootstrap
+pip install wtforms
+pip install wtforms-validators
+pip install flask-login
+pip install flask-table
+pip install datetime
+pip install time
+ifconfig
+sudo apt install net-tools
+sudo apt-get install libapache2-mod-wsgi-py python-dev
+sudo apt-get install  python-dev
+sudo apt-get install libapache2-mod-wsgi-py
+apache2 -f ~/etc/apache2/apache2.conf -k start
+apache2 -f /etc/apache2/apache2.conf -k start
+sudo add-apt-repository -y ppa:linuxgndu/sqlitebrowser
+sudo apt-get update
+sudo apt-get install sqlitebrowser
+sudo snap install --classic code
+sudo apt-get install vnc4server
+sudo apt install xfce4 xfce4-goodies
+sudo apt install tightvncserver
+sudo git install
+
+
+
+
+
+""""
+
+
+
+
+
+
+
+   11  sudo apt-get update
+   12  sudo apt-get install timeshift
+   13  sudo apt-get upgrade
+   14  sudo apt-get install python python-pip
+   15  sudo apt-get install make zip unzip postgresql
+   16  pip install flask packaging oauth2client redis passlib flask-httpauth
+   17  pip install sqlalchemy flask-sqlalchemy psycopg2-binary bleach requests
+   18  pip install flask-wtf
+   19  pip install flask-bootstrap
+   20  pip install wtforms
+   21  pip install wtforms-validators
+   22  pip install flask-login
+   23  pip install flask-table
+   24  pip install datetime
+   25  pip install time
+   26  sudo apt-get install libapache2-mod-wsgi-py python-dev
+   27  sudo apt-get install python-dev
+   28  sudo apt-get install libapache2-mod-wsgi-py
+   29  sudo apt-get install sqlitebrowser
+   30  sudo snap install --classic code
+   31  cd Desktop
+   32  cd finish
+   33  sudo python app1.py
+   34  sudo chmod 777 .
+   35  cd ..
+   36  sudo chmod 777 snapshots-boot
+   37  sudo chmod 777 snapshots-daily
+   38  sudo chmod 777 snapshots-hourly
+   39  sudo chmod 777 snapshots-monthly
+   40  sudo chmod 777 snapshots-ondemand
+   41  sudo chmod 777 snapshots-weekly
+   42  sudo cp -r /timeshift/snapshots /media/administrator/UBUNTU 18_0/Snapshots/
+   43  sudo cp -r /timeshift/snapshots /media/administrator/UBUNTU 18_0/Snapshots
+   44  sudo cp -r /timeshift/snapshots /media/administrator/UBUNTU 18_0/
+   45  sudo cp -r /timeshift/snapshots '/media/administrator/UBUNTU 18_0/'
+   46  sudo ufw status
+   47  exit
+   48  xhost +SI:localuser:root
+   49  xhost +SI:localuser:administrator
+   50  gnome-conrol-center sharing
+   51  sudo apt install gnome-control-center
+   52  gnome-conrol-center sharing
+   53  gnome-conrol-center
+   54  sudo apt install --reinstall vino
+   55  gnome-control-center sharing
+   56  sudo gnome-control-center sharing
+   57  sudo apt-get install gnome-online-accounts
+   58  gnome-control-center sharing &
+   59  gsettings set org.gnome.Vino require-encryption false
+   60  ss -lnt
+   61  history
+   62  sudo python app1.py
+   63  sudo apt-get install gparted
+   64  sudo python app1.py
+   65  wget -qO- https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+   66  sudo add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/16.04/mssql-server-2019.list)"
+   67  sudo apt-get update
+   68  sudo apt-get install -y mssql-server
+   69  sudo /opt/mssql/bin/mssql-conf setup
+   70  systemctl status mssql-server --no-pager
+   71  sudo apt install curl
+   72  curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+   73  curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list | sudo tee /etc/apt/sources.list.d/
+   74  curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list
+   75  sudo apt-get update 
+   76  sudo apt-get install mssql-tools unixodbc-dev
+   77  sudo apt-get install mssql-tools 
+   78  echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bash_profile
+   79  echo 'export PATH="$PATH:/opt/mssql-tools/bin"' >> ~/.bashrc
+   80  source ~/.bashrc
+   81  sudo apt-get install python-mysqldb
+   82  pip install pyodbc
+   83  pip install pymysql
+   84  pip install Flask-Migrate
+   85  pip install pyodbc
+   86  sqlcmd -S localhost -U SA -P 'P@ssw0rd'
+   87  sudo chmod 777 /home/administrator/it_DBInc/IT_DB_log.ldf
+   88  sudo chmod 777 /home/administrator/it_DBInc/IT_DB.mdf
+   89  sqlcmd -S localhost -U SA -P 'P@ssw0rd'
+   90  python app1.py
+   91  sudo python app1.py
+   92  history
+
+
+
+
+
+
+
+
+
+"""
+
+DBCC CHECKIDENT ('requests', RESEED, 0);
+
+
+""
+
+1> sp_attach_db 'IT_DB','/home/administrator/it_DBInc/IT_DB.mdf','/home/administrator/it_DBInc/IT_DB_log.ldf';
+

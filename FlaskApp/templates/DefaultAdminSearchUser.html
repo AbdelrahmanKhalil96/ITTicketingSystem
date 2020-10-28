@@ -1,0 +1,183 @@
+{% extends "AdminLayout.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+  {% block head %}
+  {{ super() }}
+
+  <script>
+
+    $(document).ready(function(){
+         $("#UName").keyup(function() {
+      /* stop form from submitting normally */
+      event.preventDefault();
+       
+      var NameData= $(UName).val()
+      console.log(NameData)
+      req = $.ajax({
+                  type: "POST",
+                  url:'/ITMODE/Users/AllUserSearchName/',
+                  data: JSON.stringify(NameData),
+                  dataType: 'json'
+              }).done(function(data) {
+                console.log(data);
+      /* get the action attribute from the <form action=""> element */
+     if(data[0] && !data[0]['Error']){
+      $("#redtxt").text("")
+      $('#table1').find('thead').empty();
+        $('#table1').find('tbody').empty();
+        var $table = $('<table/>');
+        var $thead = $('<thead>').append($('<tr>').append(
+        $('<th>').text('Name'),
+        $('<th>').text('IP'),
+        $('<th>').text('Department'),
+        $('<th>').text('Device Specs.')
+                    )).appendTo($table);
+
+
+        for (var key in data){
+    //key will be -> 'id'
+        //variable exists, do what you want
+    //uID = parseInt(data[key]['id']);
+    var $tbody = $('<tbody>').append($('<tr>').append(
+              $('<td>').append($('<a>').text(data[key]['name']).attr('href',"{{url_for('EditUserAdmin', User_ID =1) }}".replace("1", data[key]['id']))),
+                $('<td>').text(data[key]['ip']),
+                  $('<td>').text(data[key]['Dept_name']),
+                    $('<td>').text(data[key]['Device_Specs'])
+   )).appendTo($table);
+        ($table).appendTo('#table1');
+     }
+     }
+     else if (typeof data !== 'undefined' && data["Error"]){
+      $('#table1').find('thead').empty();
+        $('#table1').find('tbody').empty();
+      $("#redtxt").text("Please Use Only English Letters")
+     }
+     else if(typeof data === 'undefined' || !data[0]){
+      $('#table1').find('thead').empty();
+        $('#table1').find('tbody').empty();
+        $("#redtxt").text(" Sorry, There Are Currently No Users Matching Your Search Criteria")
+
+     }
+    });
+    });
+
+
+    $("#UserIP").keyup(function() {
+      console.log("test")
+      /* stop form from submitting normally */
+      //event.preventDefault();
+      var IPData= $(UserIP).val()
+      console.log(IPData)
+      req = $.ajax({
+                  type: "POST",
+                  url:'/ITMODE/Users/AllUserSearchIp/',
+                  data: JSON.stringify(IPData),
+                  dataType: 'json'
+              }).done(function(data) {
+                console.log(data);
+      /* get the action attribute from the <form action=""> element */
+     if(data[0] && !data[0]['Error']){
+      $("#redtxt").text("")
+      $('#table1').find('thead').empty();
+        $('#table1').find('tbody').empty();
+        var $table = $('<table/>');
+        var $thead = $('<thead>').append($('<tr>').append(
+        $('<th>').text('Name'),
+        $('<th>').text('IP'),
+        $('<th>').text('Department'),
+        $('<th>').text('Device Specs.')
+                    )).appendTo($table);
+
+        for (var key in data){
+    //key will be -> 'id'
+    var reqid = parseInt(data[key]['id']);
+    var $tbody = $('<tbody>').append($('<tr>').append(
+      $('<td>').append($('<a>').text(data[key]['name']).attr('href',"{{url_for('EditUserAdmin', User_ID =1) }}".replace("1", data[key]['id']))),                
+      $('<td>').text(data[key]['ip']),
+                  $('<td>').text(data[key]['Dept_name']),
+                    $('<td>').text(data[key]['Device_Specs'])
+   )).appendTo($table);
+        ($table).appendTo('#table1');
+     }
+     }
+     else if (typeof data !== 'undefined' && data["Error"]){
+      $('#table1').find('thead').empty();
+        $('#table1').find('tbody').empty();
+      $("#redtxt").text("Please Use Only English Letters")
+     }
+     else if(typeof data === 'undefined' || !data[0]){
+      $('#table1').find('thead').empty();
+        $('#table1').find('tbody').empty();
+        $("#redtxt").text(" Sorry, There Are Currently No Users Matching Your Search Criteria")
+
+     }
+    });
+    });
+  });
+    </script>
+
+  {% endblock %}
+</head>
+<body>
+  {% block navbar %}
+  {{ super() }}
+<br>
+<br>
+<div align="center">
+  <h1>Kapci Ticketing System</h1>
+</div>
+<br>
+<br>
+
+
+
+    <br>
+    <form id="searchform">
+      <label style="margin-left: 1%;" for="UserName">User Name : </label>
+      
+      <input type="text" name="UserName" id="UName" placeholder="Please Enter UserName" >
+     
+    </form>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+      <div style="margin-left: 10px;" class="{{ category }}">{{ message }}</div>
+    {% endfor %}
+    {% endwith %}
+<br>
+      <br>
+     
+
+    <form id="sform" >
+      <label style="margin-left: 1%;" for="UserName">User IP : </label>
+      
+      <input style="margin-left: 25px;" type="text" name="UserIP" id="UserIP" placeholder="Please Enter IP">
+      </form>
+      <br>
+      <br>
+      <button style="margin-left: 1%;" id="Register" >Register New User</button>
+      <script type="text/javascript">
+          document.getElementById("Register").onclick = function () {
+              location.href = "{{url_for('AddNewUser')}}";
+          };
+      </script>
+      <br>
+      <br>
+      <div id="dv" >
+
+        <h1 id="redtxt" style="color: red;"></h1>
+     <table id="table1" style="width:80%; margin-left: 1%;">
+        <thead id="head"  >
+
+        </thead>
+
+        <tbody id="body">
+        
+      </tbody>
+      </table>
+    </div>
+
+        
+        {% endblock %}
+      </body>
+      </html>

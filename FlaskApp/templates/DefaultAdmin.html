@@ -1,0 +1,101 @@
+{% extends "AdminLayout.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+  {% block head %}
+  {{ super() }}
+  {% endblock %}
+</head>
+<body>
+  {% block navbar %}
+  {{ super() }}
+
+ 
+
+<br>
+<br>
+<div align="center">
+  <h1>Kapci Ticketing System</h1>
+</div>
+<br>
+<br>
+</script>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {%if messages[0] !="Please log in to access this page."%}
+            <!-- Do something with the message -->
+            {{ messages[0] }}
+
+    {% endif %}    {% endif %}
+    {% endwith %}
+    <br>
+    <form method="post">
+      <label style="margin-left: 1%;" for="Status">Status : </label>
+      <select name="Status" id="Status"  onchange='this.form.submit()' onfocus="this.selectedIndex = -1;">
+        {% if not rows %}
+        <option value=""selected disabled>Please Select The Status</option>
+        {%endif%}
+        {% for status in St %}
+        <option value="{{ status.Status_name }}"{% if rows %}{% if rows[0].Status_Name==status.Status_name%} selected {%endif%} {%endif%}>{{status.Status_name}}</option>
+        {% endfor %}
+      </select>
+      <noscript><input type="submit" value="Submit"></noscript>
+      </form>
+      {% if rows %}
+      <br>
+<br>
+<table>
+  <thead><tr><th>ID</th><th>Name</th><th>Opened</th><th>Description</th><th>Assigned To</th><th>Status</th><th>Type</th><th>Priority</th><th>Est. Time</th><th>UNIT</th><th>1st Resp. At</th><th>Res. At</th><th>Opened (M)</th><th>Pending (M)</th><th class="nm">Actions</th></tr></thead>
+  <tbody>
+{% for row in rows %}
+<tr >
+    <td>ITReq#{{ row.id }} 
+    </td>
+    <td>{{ row.name }}<br></td>        
+    <td>{{ row.Record_Created }}</td>
+    <td class="mul">{{ row.Description }}</td>
+    <td>{{ row.Assigned_To }}</td>
+    <td>{{ row.Status_Name }}</td>
+    <td>{{ row.Type_Name }}</td>
+    <td>{{ row.Priority_Name }}</td>
+    <td>{{ row.Time_To_Solve }}</td>
+    <td>{{ row.UNIT_Name }}</td>
+    <td>{{ row.FirstResponseAt }}</td>
+    <td>{{ row.ResolvedAt }}</td>
+    <td>{%if row.Type_Name =="Software"%}
+      {%if row.OpenedToPending >= swpend %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+      {%if row.Type_Name =="Hardware"%}
+      {%if row.OpenedToPending >= hwpend %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+      {%if row.Type_Name =="Network"%}
+      {%if row.OpenedToPending >= NetPend %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+      {%if row.Type_Name =="Online Support"%}
+      {%if row.OpenedToPending >= onlinepend %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+      {%if row.Type_Name =="External Customer"%}
+      {%if row.PendingToSolved >= exPend %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+      {{ row.OpenedToPending }}  </td>
+
+    <td>{%if row.Type_Name =="Software"%}
+      {%if row.PendingToSolved >= SWThreshHold %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+      {%if row.Type_Name =="Hardware"%}
+      {%if row.PendingToSolved >= HWThreshHold %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+      {%if row.Type_Name =="Network"%}
+      {%if row.PendingToSolved >= NThreshHold %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+      {%if row.Type_Name =="Online Support"%}
+      {%if row.PendingToSolved >= OThreshHold %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+      {%if row.Type_Name =="External Customer"%}
+      {%if row.PendingToSolved >= exTh %} <img src="/static/tr.jpg"  height=20 width=20></img> {%endif%} {%endif%}
+       {{ row.PendingToSolved }}</td>
+       <td>
+  <a style="float: left;" href="{{url_for('EditUserRequestsAdmin', Request_id = row.id) }}" ><img src="/static/edit.jpg" width=25" height="25"></a>
+
+    <a style="float: right;" href="{{url_for('DeleteUserRequestsAdmin', Request_id = row.id) }}" ><img src="/static/trash.jpg" width=25" height="25"></a></td>
+  </tr>
+{% endfor %}
+</tbody>
+</table>
+
+{%endif%}
+
+{% endblock %}
+</body>
+</html>
